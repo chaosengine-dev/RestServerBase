@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors');
 const path = require('path');
+const { dbconnect } = require('../database/config');
 
 require('dotenv').config();
 
@@ -11,6 +12,8 @@ class Server {
         this.port = process.env.PORT;
         this.app = express();
         
+        // Conectar a base de datos
+        this.conectarDB();
 
         // Middlewares
         this.middlewares();
@@ -21,6 +24,10 @@ class Server {
         // Poner a escuchar en un puerto
         this.listen();
     };
+
+    async conectarDB() {
+        await dbconnect();
+    }
 
     middlewares() {
         // Usar cors
